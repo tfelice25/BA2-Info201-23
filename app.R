@@ -14,7 +14,8 @@ ui <- fluidPage(
               tabPanel("Question 1"),
               tabPanel("Question 2"),
               tabPanel("Question 3"),
-              tabPanel("QUestion 4"),
+              tabPanel("Question 4"),
+              tabePanel("Conclusion")
               
               
               
@@ -24,7 +25,13 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  
+  output$hour_plot <- renderPlot({
+    bike_data %>% 
+      select(hour,num_bikes_rented,seasons) %>% 
+      group_by(hour) %>% 
+      summarize(avg_bikes=mean(num_bikes_rented)) %>% 
+      ggplot(aes(hour,avg_bikes))+geom_point()+geom_smooth()
+  })
   
   
   
