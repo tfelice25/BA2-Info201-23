@@ -13,9 +13,13 @@ ui <- fluidPage(
               tabPanel("Overview Page"),
               tabPanel("Question 1"),
               tabPanel("Question 2"),
-              tabPanel("Question 3"),
+              tabPanel("Question 3",
+                       sidebarLayout(
+                         sidebarPanel(),
+                         mainPanel(plotOutput("hour_plot")),
+                       )),
               tabPanel("Question 4"),
-              tabePanel("Conclusion")
+              tabPanel("Conclusion")
               
               
               
