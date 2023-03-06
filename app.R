@@ -15,7 +15,10 @@ ui <- fluidPage(
               tabPanel("Question 2"),
               tabPanel("Question 3",
                        sidebarLayout(
-                         sidebarPanel(),
+                         sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
+                           "Year Round"="Year Round", "Spring"="Spring", "Summer"="Summer",
+                           "Autumn"="Autumn", "Winter"="Winter"), selected = "Year Round"))
+                         ,
                          mainPanel(plotOutput("hour_plot")),
                        )),
               tabPanel("Question 4"),
