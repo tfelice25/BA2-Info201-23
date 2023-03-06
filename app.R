@@ -19,7 +19,8 @@ ui <- fluidPage(
                            "Year Round"="Year Round", "Spring"="Spring", "Summer"="Summer",
                            "Autumn"="Autumn", "Winter"="Winter"), selected = "Year Round")
                            ),
-                         mainPanel(plotOutput("hour_plot")),
+                         mainPanel(plotOutput("hour_plot"),
+                                   plotOutput("hour_diff")),
                        )),
               tabPanel("Question 4"),
               tabPanel("Conclusion")
@@ -56,6 +57,37 @@ server <- function(input, output) {
     }
     
     
+  })
+  
+  output$hour_diff <- renderPlot({
+    
+    year_round_data <- bike_data %>% 
+      select(hour,num_bikes_rented,seasons) %>% 
+      group_by(hour) %>% 
+      summarize(avg_bikes=mean(num_bikes_rented)) %>% 
+      pull(avg_bikes)
+    
+    
+    avg_finder <- function(season) {
+      seasons_data <- bike_data %>% 
+        select(hour,num_bikes_rented,seasons) %>% 
+        filter(seasons%in%season) %>% 
+        group_by(hour,seasons) %>% 
+        summarize(avg_bikes=mean(num_bikes_rented)) %>% 
+        pull(avg_bikes)
+      
+      
+      mean(seasons_data-year_round_data)
+    }
+    
+    seasons_list <- c("Spring","Summer","Autumn","Winter")
+    
+    diff_list <- c(avg_finder("Spring"),avg_finder("Summer"),avg_finder("Autumn"),avg_finder("Winter"))
+    
+    diff_df <- data.frame(seasons_list,diff_list)
+    
+
+    ggplot(diff_df)+geom_col(aes(seasons_list,diff_list,fill=seasons_list))
   })
   
   
