@@ -5,6 +5,7 @@ library(dplyr)
 library(tidyverse)
 
 bike_data <- read_csv("bikes.csv")
+bikes <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
@@ -20,7 +21,15 @@ ui <- fluidPage(
                        mainPanel(textOutput("text"), textOutput("text2"), plotOutput("plot"), tableOutput("sample"))
                        ),
               tabPanel("Question 2"),
-
+                        sidebarLayout(
+                           sidebarPanel(
+                              sliderInput("month",
+                                          "month of the year", 
+                                           value = 6,
+                                           min = 1,
+                                           max = 12),
+                           ),
+                        mainPanel(plotOutput("plot")),
               tabPanel("Question 3",
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
@@ -43,8 +52,9 @@ ui <- fluidPage(
 
               tabPanel("Question 4"),
               tabPanel("Conclusion")
-  )
-)
+                )
+              )
+
 # comment to see if app is being shared and tracked correctly 
 
 server <- function(input, output) {
@@ -157,9 +167,19 @@ server <- function(input, output) {
     paste("The month with the least rentals for this year on average is", avg_data()[1])
   })
   
+  bikemonth <- reactive({
+    bikes %>% 
+      filter(month %in% input$month)
+  })
+  output$plot <- renderPlot({ # plot code goes here
+    bikemonth() %>% 
+      ggplot(aes(num_bikes_rented, solar_radiation))+
+      geom_line(col = input$color)+
+      labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Number of Bikes Rented", y= "Amount of Solar Radiation in MJ/m2")
  
-  
+  })
 }
 
 # Run the application 
 shinyApp(ui = ui, server = server)
+
