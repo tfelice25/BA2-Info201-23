@@ -25,7 +25,17 @@ ui <- fluidPage(
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
                            "Year Round"="Year Round", "Spring"="Spring", "Summer"="Summer",
-                           "Autumn"="Autumn", "Winter"="Winter"), selected = "Year Round")
+                           "Autumn"="Autumn", "Winter"="Winter"), selected = "Year Round"),
+                           h2("Plot 1"),
+                           p("For Plot 1 titled \"Average Bike Rentals by Hour\" the idea was to make a plot that could clearly show the average per hour while indicating the continuous aspect of
+                             bikes being rented out throughout the continuous course of a day/hour. In doing so, the goal was to be able to see what hours have peak rentals and with the introduction
+                             of the different seasonal data, we could compare whether those peaks or dips change based off of the season \n"),
+                           p("\n"),
+                           h2("Plot 2"),
+                           p("Plot number two is not an interactive plot but rather looks to add some visualization and build a little off of the previous plot. We found the difference for each
+                             each hour for a season from the year round average in order to see the average deviation each month had. While the prior graph contains this information based off
+                             of the distance between the LOESS lines, plot 2 offers an exact value for the average distance and offers a clearer visual to determine deviation. ")
+                           
                            ),
                          mainPanel(plotOutput("hour_plot"),
                                    plotOutput("hour_diff"))
@@ -84,11 +94,14 @@ server <- function(input, output) {
     
     if ("Year Round"%in%input$Seasons==TRUE) {
         ggplot()+geom_point(data=year_round_data,aes(hour,avg_bikes),color="Black")+geom_smooth(data=year_round_data,aes(hour,avg_bikes),se=FALSE,color="Black")+
-        geom_point(data=seasons_data,aes(hour,avg_bikes,col=seasons))+geom_smooth(data=seasons_data,aes(hour,avg_bikes,col=seasons),se=FALSE)
+        geom_point(data=seasons_data,aes(hour,avg_bikes,col=seasons))+geom_smooth(data=seasons_data,aes(hour,avg_bikes,col=seasons),se=FALSE)+
+        labs(title="Average Bike Rentals by Hour",x="Hour of Day",y="Average Number of Bikes Rented")
       
     }
     else{
-      ggplot()+geom_point(data=seasons_data,aes(hour,avg_bikes,col=seasons))+geom_smooth(data=seasons_data,aes(hour,avg_bikes,col=seasons),se=FALSE)
+      ggplot()+geom_point(data=seasons_data,aes(hour,avg_bikes,col=seasons))+geom_smooth(data=seasons_data,aes(hour,avg_bikes,col=seasons),se=FALSE)+
+        labs(title="Average Bike Rentals by Hour",x="Hour of Day",y="Average Number of Bikes Rented")
+      
     }
     
     
@@ -122,7 +135,7 @@ server <- function(input, output) {
     diff_df <- data.frame(seasons_list,diff_list)
     
 
-    ggplot(diff_df)+geom_col(aes(seasons_list,diff_list,fill=seasons_list))
+    ggplot(diff_df)+geom_col(aes(seasons_list,diff_list,fill=seasons_list))+labs(title="Difference from Year Round Average Rental Rate",x="Seasons",y="Average Difference",fill="Seasons")
 
   })
   
