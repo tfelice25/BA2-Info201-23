@@ -192,7 +192,7 @@ server <- function(input, output) {
   output$plot <- renderPlot({ # plot code goes here
     bikemonth() %>% 
       ggplot(aes(num_bikes_rented, solar_radiation))+
-      geom_line(col = input$color)+
+      geom_line()+
       labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Number of Bikes Rented", y= "Amount of Solar Radiation in MJ/m2")
  
   })
