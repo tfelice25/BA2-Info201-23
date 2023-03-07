@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyverse)
 
 bike_data <- read_csv("bikes.csv")
-bikes <- read_delim("bikes2.csv")
+#bikes <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
@@ -50,10 +50,28 @@ ui <- fluidPage(
                                    plotOutput("hour_diff"))
                        )),
 
-              tabPanel("Question 4"),
+              tabPanel("Question 4: Precipitation Impacts on Bike Rentals",
+                       sidebarLayout(
+                         sidebarPanel(
+                           sliderInput("precipSlider", label = h3("Select Precipitation (mm) Range"), min = 0, 
+                                       max = 35, value = c(0, 15)),
+                           selectInput("select", label = h3("Select Point Color"), 
+                                       choices = list("Black" = 1, "Blue" = 2, "Green" = 3, "Purple" = 4), 
+                                       selected = "Red"),
+                         ),   
+                         mainPanel(plotOutput("precip_plot"),
+                                   p("This graphical display shows us that there is a distinct negative correlation between bike rental
+                                     rates and precipitation. This makes sense, as those who choose to bike not out of necessity
+                                     would likely opt for other modes of transportation if it were raining, which is significantly less
+                                     pleasant in the rain. Of course this isn't universally true, as some people likely rely on 
+                                     bikes to get to places around the city like their place of work. The average number of bikes rented
+                                     for this range of precipitation is:"),
+                                   strong(textOutput("avPrecip"))),
+                        )),
               tabPanel("Conclusion")
                 )
               )
+)
 
 # comment to see if app is being shared and tracked correctly 
 
@@ -168,7 +186,7 @@ server <- function(input, output) {
   })
   
   bikemonth <- reactive({
-    bikes %>% 
+    bike_data %>% 
       filter(month %in% input$month)
   })
   output$plot <- renderPlot({ # plot code goes here
@@ -177,6 +195,48 @@ server <- function(input, output) {
       geom_line(col = input$color)+
       labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Number of Bikes Rented", y= "Amount of Solar Radiation in MJ/m2")
  
+  })
+  
+  #define as reactive for plot
+  bikesInput <- reactive({
+    bike_data %>% 
+      filter(rainfall %in% input$precipSlider)
+  })
+  
+  #make reactive text for plot
+  output$avPrecip <- renderText({
+    print(mean(bikesInput()$num_bikes_rented))
+  })
+  
+  #access range from slider on plot page
+  output$range <- renderPrint({ input$precipSlider })
+  
+  #access dot color changer for plot
+  output$value <- renderPrint({ input$selectColor })
+  
+  #define colors
+  colors <- reactive({ switch(
+    input$selectColor,
+    "1" = "black",
+    "2" = "blue",
+    "3" = "green",
+    "4" = "purple"
+  )
+  })
+  
+  #make plot
+  output$precip_plot <- renderPlot({
+    bike_data %>% 
+      select(rainfall,num_bikes_rented) %>% 
+      filter(rainfall>=input$precipSlider[1], rainfall<=input$precipSlider[2]) %>% 
+      group_by(rainfall) %>% 
+      summarize(avg_bikes=mean(num_bikes_rented)) %>% 
+      ggplot(aes(rainfall, avg_bikes))+
+      scale_fill_manual(values = colors)+
+      geom_point()+
+      geom_smooth()+
+      labs(x = "Precipitation (mm) per day", y = "Number of Bikes Rented per day",
+           title = "Analyzing Impact of Precipitation on Bike Rental Rates in Seoul")
   })
 }
 
