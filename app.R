@@ -28,15 +28,9 @@ ui <- fluidPage(
                                            value = 6,
                                            min = 1,
                                            max = 12),
-                              
                            ),
                         mainPanel(
-                          plotOutput("plot"),
-                          h2("Findings"),
-                          p("In comparing the amount of solar radiation to bike rentals I found very little to no correlation. No graph for any month showed enough clustering or grouping 
-            of the data points to suggest that there was a strong relationship between the two. One interesting characteristic I did see in the graphs was that the range of bike rentals between months
-            increased from month 1 until month 7. After month 7, the range began to decrease each month."),
-                          h2("Conclusion"),
+                          plotOutput("plotsolar"),
                           )),
               tabPanel("Question 3",
                        sidebarLayout(
@@ -199,7 +193,7 @@ server <- function(input, output) {
     bike_data %>% 
       filter(month %in% input$month)
   })
-  output$plot <- renderPlot({ # plot code goes here
+  output$plotsolar <- renderPlot({ # plot code goes here
     bikemonth() %>% 
       ggplot(aes(num_bikes_rented, solar_radiation))+
       geom_point()+
