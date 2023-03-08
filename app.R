@@ -63,9 +63,10 @@ ui <- fluidPage(
                            h1("How Does Solar Radiation Affect Bike Rentals on a Given Day?"),
                            plotOutput("plotsolar"),
                            h2("Explanation"),
-                           p("While future editions of our app may include a regression line to highlight the 
-                            relationship between solar radiation and bike rentals, the current plot shows little to no
-                            strong correlation between the two variables."),
+                           p("The goal of both the table and the plot was to understand the 
+                             relationship between solar radiation and the number of bike rentals in a given day. 
+                             Across all months, there is little strong correlation between the two variables and many outliers. Thus,
+                             we cannont conclude much from this comparison alone."),
                            h2("Data Table With Median, Minimum and Maximum Values"),
                            tableOutput("tablesolar")
                            
