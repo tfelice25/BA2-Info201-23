@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyverse)
 
 bike_data <- read_csv("bikes.csv")
-#bikes <- read_delim("bikes2.csv")
+bikes <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
@@ -28,8 +28,16 @@ ui <- fluidPage(
                                            value = 6,
                                            min = 1,
                                            max = 12),
+                              
                            ),
-                        mainPanel(plotOutput("plot")),
+                        mainPanel(
+                          plotOutput("plot"),
+                          h2("Findings"),
+                          p("In comparing the amount of solar radiation to bike rentals I found very little to no correlation. No graph for any month showed enough clustering or grouping 
+            of the data points to suggest that there was a strong relationship between the two. One interesting characteristic I did see in the graphs was that the range of bike rentals between months
+            increased from month 1 until month 7. After month 7, the range began to decrease each month."),
+                          h2("Conclusion"),
+                          ),
               tabPanel("Question 3",
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
@@ -68,7 +76,9 @@ ui <- fluidPage(
                                      for this range of precipitation is:"),
                                    strong(textOutput("avPrecip"))),
                         )),
-              tabPanel("Conclusion")
+              tabPanel("Conclusion", mainPanel(
+                p("this is a written conclusion place holder")))
+              
                 )
               )
 )
@@ -192,7 +202,7 @@ server <- function(input, output) {
   output$plot <- renderPlot({ # plot code goes here
     bikemonth() %>% 
       ggplot(aes(num_bikes_rented, solar_radiation))+
-      geom_line()+
+      geom_point()+
       labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Number of Bikes Rented", y= "Amount of Solar Radiation in MJ/m2")
  
   })
