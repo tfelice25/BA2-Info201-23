@@ -13,7 +13,7 @@ ui <- fluidPage(
   titlePanel("BA2 Info Final App"),
   tabsetPanel(type = "tabs",
       tabPanel("Overview Page",
-               
+               imageOutput("seoulbike"),
                h1("Analyzing Bike Rental Data in Seoul, South Korea"),
                h2("Background of the Data"),
                p("The data used in the following interactive visualizations and analysis was provided by the", em("UCI Machine Learning Repository"), ". 
@@ -294,6 +294,14 @@ server <- function(input, output) {
       group_by(month) %>% 
       summarize(median_bikes = median(num_bikes_rented), median_solar = median(solar_radiation), min_bikes = min(num_bikes_rented), max_bikes = max(num_bikes_rented), min_solar = min(solar_radiation), max_solar = max(solar_radiation))
   })
+  
+  output$seoulbike <- renderImage({
+    filename <- normalizePath(file.path("./images/seoulbike.jpeg"))
+    list(src = filename,
+         alt = paste("Two Women in Seoul Using the Public Bike Share System"))
+    }, deleteFile = FALSE)
+  
+  
 }
 
 # Run the application 
