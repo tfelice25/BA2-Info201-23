@@ -12,7 +12,7 @@ ui <- fluidPage(
   
   titlePanel("BA2 Info Final App"),
   tabsetPanel(type = "tabs",
-              tabPanel("Overview Page"),
+      tabPanel("Overview Page"),
               tabPanel("Question 1",
                        sidebarPanel("This graph shows the average number of bike rentals 
                        each month for the year selected.", 
@@ -20,7 +20,7 @@ ui <- fluidPage(
                                                  choices = c(num))),
                        mainPanel(textOutput("text"), textOutput("text2"), plotOutput("plot"), tableOutput("sample"))
                        ),
-              tabPanel("Question 2"),
+              tabPanel("Question 2",
                         sidebarLayout(
                            sidebarPanel(
                               sliderInput("month",
@@ -74,6 +74,7 @@ ui <- fluidPage(
                 p("this is a written conclusion place holder")))
                 )
               )
+)
 
 
 # comment to see if app is being shared and tracked correctly 
