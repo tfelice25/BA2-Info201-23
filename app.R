@@ -5,7 +5,7 @@ library(dplyr)
 library(tidyverse)
 
 bike_data <- read_csv("bikes.csv")
-bikes <- read_delim("bikes2.csv")
+bikes2 <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
@@ -81,7 +81,7 @@ ui <- fluidPage(
                 p("this is a written conclusion place holder")))
                 )
               )
-)
+
 
 
 # comment to see if app is being shared and tracked correctly 
@@ -198,7 +198,7 @@ server <- function(input, output) {
   })
   
   bikemonth <- reactive({
-    bike_data %>% 
+    bikes2 %>% 
       filter(month %in% input$month)
   })
   output$plotsolar <- renderPlot({ # plot code goes here
