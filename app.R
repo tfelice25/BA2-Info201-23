@@ -30,9 +30,31 @@ ui <- fluidPage(
                                            value = 6,
                                            min = 1,
                                            max = 12),
+                              
+                              h3("Month Number Key"),
+                              p(strong(1), "- January"),
+                              p(strong(2), "- February"),
+                              p(strong(3), "- March"),
+                              p(strong(4), "- April"),
+                              p(strong(5), "- May"),
+                              p(strong(6), "- June"),
+                              p(strong(7), "- July"),
+                              p(strong(8), "- August"),
+                              p(strong(9), "- September"),
+                              p(strong(10), "- October"), 
+                              p(strong(11), "- November"),
+                              p(strong(12), "- December"), 
                            ),
                         mainPanel(
+                          h1("How Does Solar Radiation Affect Bike Rentals on a Given Day?"),
                           plotOutput("plotsolar"),
+                          h2("Explanation"),
+                          p("While future editions of our app may include a regression line to highlight the 
+                            relationship between solar radiation and bike rentals, the current plot shows little to no
+                            strong correlation between the two variables."),
+                          h2("Data Table With Median, Minimum and Maximum Values"),
+                          tableOutput("tablesolar")
+                          
                           ))),
                        
                        
@@ -203,9 +225,9 @@ server <- function(input, output) {
   })
   output$plotsolar <- renderPlot({ # plot code goes here
     bikemonth() %>% 
-      ggplot(aes(num_bikes_rented, solar_radiation))+
+      ggplot(aes(solar_radiation,num_bikes_rented))+
       geom_point()+
-      labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Number of Bikes Rented", y= "Amount of Solar Radiation in MJ/m2")
+      labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Amount of Solar Radiation in MJ/m2", y="Number of Bikes Rented")
  
   })
   
@@ -249,6 +271,13 @@ server <- function(input, output) {
       geom_smooth()+
       labs(x = "Precipitation (mm) per day", y = "Number of Bikes Rented per day",
            title = "Analyzing Impact of Precipitation on Bike Rental Rates in Seoul")
+  })
+  
+  output$tablesolar <- renderTable({
+    table <- bikes2 %>% 
+      filter(!is.na(solar_radiation), !is.na(num_bikes_rented), month %in% input$month) %>% 
+      group_by(month) %>% 
+      summarize(median_bikes = median(num_bikes_rented), median_solar = median(solar_radiation), min_bikes = min(num_bikes_rented), max_bikes = max(num_bikes_rented), min_solar = min(solar_radiation), max_solar = max(solar_radiation))
   })
 }
 
