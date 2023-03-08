@@ -101,6 +101,7 @@ server <- function(input, output) {
       ggtitle(paste("Average Bike Rentals by Month for", input$year))
   })
   
+  # Create table of bike rental average for each month
   output$sample <- renderTable({
     newg <- 
       bike_data%>%
@@ -190,7 +191,7 @@ server <- function(input, output) {
       filter(total_rentals == min(total_rentals))
   })
   
-  # Find the month with the most rentals for the input year
+  # Find the month with the least rentals for the input year
   output$text2 <- renderPrint({
     paste("The month with the least rentals for this year on average is", avg_data()[1])
   })
