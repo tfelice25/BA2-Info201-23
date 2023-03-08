@@ -9,7 +9,7 @@ bikes2 <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
-  
+  setBackgroundImage(src = "images/background.jpg"),
   titlePanel("Analyzing Bike Rental Usage in Seoul"),
   tabsetPanel(type = "tabs",
               tabPanel("Overview Page",
@@ -105,6 +105,7 @@ ui <- fluidPage(
                          ),   
                          mainPanel(plotOutput("precip_plot"),
                                    h2("Analysis of Trend & Correlation"),
+                                   h3("How does precipitation impact bike rental rates? What does this imply about when more stock should be supplied?"),
                                    p("This graphical display shows us that there is a distinct negative correlation between bike rental
                                      rates and precipitation. This makes sense, as those who choose to bike not out of necessity
                                      would likely opt for other modes of transportation if it were raining, which is significantly less
