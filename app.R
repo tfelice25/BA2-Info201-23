@@ -10,7 +10,7 @@ num <- unique(bike_data$year)
 
 ui <- fluidPage(
   
-  titlePanel("BA2 Info Final App"),
+  titlePanel("Analyzing Bike Rental Usage in Seoul"),
   tabsetPanel(type = "tabs",
               tabPanel("Overview Page",
                        imageOutput("seoulbike"),
@@ -28,7 +28,7 @@ ui <- fluidPage(
                        
                        
               ),
-              tabPanel("Question 1",
+              tabPanel("Question 1: Impact of Month on Rentals",
                        sidebarPanel("This graph shows the average number of bike rentals 
                        each month for the year selected.", 
                                     radioButtons("year", "Select Year",
@@ -37,7 +37,7 @@ ui <- fluidPage(
               ),
               
               
-              tabPanel("Question 2",
+              tabPanel("Question 2: Impact of Solar Radiation on Rentals",
                        sidebarLayout(
                          sidebarPanel(
                            sliderInput("month",
@@ -104,6 +104,7 @@ ui <- fluidPage(
                                        selected = "Red"),
                          ),   
                          mainPanel(plotOutput("precip_plot"),
+                                   h2("Analysis of Trend & Correlation"),
                                    p("This graphical display shows us that there is a distinct negative correlation between bike rental
                                      rates and precipitation. This makes sense, as those who choose to bike not out of necessity
                                      would likely opt for other modes of transportation if it were raining, which is significantly less
@@ -117,7 +118,9 @@ ui <- fluidPage(
               tabPanel("Conclusion",
                        mainPanel(
                          h1("Important Findings"),
-                         HTML("<ul><li>With respect to weather analysis, bike rentals are at their highest under dry conditions and dropping off significantly between 0-2 mm of rain.</li><li>
+                         HTML("<ul><li>With respect to weather analysis, bike rentals are at their highest under dry conditions and dropping off significantly between 0-2 mm of rain.
+                              While the negative correlation loses momentum after 5-10 mm of rain, this makes sense as those who would likely be biking in the rain already
+                              likely have it as their main form of transport, and would be undeterred by precipitation.</li><li>
                               Solar radiation does not seem to have a strong correlation to number of bikes rented.</li><li>
                               Taking a look at question 3 we see that both 7am and 6pm see large jumps in bike rentals deviating significantly from their LOESS lines.
                               These align with commute hours with 7am being when people prepare to go to work and 6pm being right when people get off work.
