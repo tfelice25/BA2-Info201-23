@@ -20,6 +20,8 @@ ui <- fluidPage(
                                                  choices = c(num))),
                        mainPanel(textOutput("text"), textOutput("text2"), plotOutput("plot"), tableOutput("sample"))
                        ),
+      
+      
               tabPanel("Question 2",
                         sidebarLayout(
                            sidebarPanel(
@@ -31,7 +33,9 @@ ui <- fluidPage(
                            ),
                         mainPanel(
                           plotOutput("plotsolar"),
-                          )),
+                          ))),
+                       
+                       
               tabPanel("Question 3",
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
@@ -51,6 +55,7 @@ ui <- fluidPage(
                          mainPanel(plotOutput("hour_plot"),
                                    plotOutput("hour_diff"))
                        )),
+              
 
               tabPanel("Question 4: Precipitation Impacts on Bike Rentals",
                        sidebarLayout(
@@ -70,6 +75,8 @@ ui <- fluidPage(
                                      for this range of precipitation is:"),
                                    strong(textOutput("avPrecip"))),
                         )),
+              
+              
               tabPanel("Conclusion", mainPanel(
                 p("this is a written conclusion place holder")))
                 )
