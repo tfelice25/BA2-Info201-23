@@ -16,8 +16,8 @@ ui <- fluidPage(
                imageOutput("seoulbike"),
                h1("Analyzing Bike Rental Data in Seoul, South Korea"),
                h2("Background of the Data"),
-               p("The data used in the following interactive visualizations and analysis was provided by the", em("UCI Machine Learning Repository"), ". 
-                 It shows data on bike rentals in Seoul, South Korea over a two year period: from December 2017 to November 2018. The dataset includes 14 variables (columns) and 8,760 separate enteries (rows)."),
+               p("In 2015, Seoul, South Korea created a new type of public transportation in the form of Bike sharing. The data used in the following interactive visualizations and analysis was provided by the", em("UCI Machine Learning Repository"), " was collected 
+               of off that system. It shows data on bike rentals over a two year period: from December 2017 to November 2018. The dataset includes 14 variables (columns) and 8,760 separate enteries (rows)."),
                h2("Goals"),
                p("We want to analyze what environmental conditions inform demand rates of rentable bikes. Specifically,
                  we imagined our audience would be the managers and designers of bike share companies (such as lime, Bird, MoBike and others),
