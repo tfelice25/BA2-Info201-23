@@ -256,11 +256,11 @@ server <- function(input, output) {
     paste("The month with the least rentals for this year on average is", avg_data()[1])
   })
   
-  bikemonth <- reactive({
+  bikemonth <- reactive({ # creates a reactive element for plot code which follows 
     bikes2 %>% 
       filter(month %in% input$month)
   })
-  output$plotsolar <- renderPlot({ # plot code goes here
+  output$plotsolar <- renderPlot({ # plot for solar radiation v. bike rentals graph
     bikemonth() %>% 
       ggplot(aes(solar_radiation,num_bikes_rented))+
       geom_point()+
@@ -310,14 +310,14 @@ server <- function(input, output) {
            title = "Analyzing Impact of Precipitation on Bike Rental Rates in Seoul")
   })
   
-  output$tablesolar <- renderTable({
+  output$tablesolar <- renderTable({ # creates table for question 2 / solar v. bike rentals 
     table <- bikes2 %>% 
       filter(!is.na(solar_radiation), !is.na(num_bikes_rented), month %in% input$month) %>% 
       group_by(month) %>% 
       summarize(median_bikes = median(num_bikes_rented), median_solar = median(solar_radiation), min_bikes = min(num_bikes_rented), max_bikes = max(num_bikes_rented), min_solar = min(solar_radiation), max_solar = max(solar_radiation))
   })
   
-  output$seoulbike <- renderImage({
+  output$seoulbike <- renderImage({ # creates the image you see on the overview page of the app
     filename <- normalizePath(file.path("./images/seoulbike.jpeg"))
     list(src = filename,
          alt = paste("Two Women in Seoul Using the Public Bike Share System"))
