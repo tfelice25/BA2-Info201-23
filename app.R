@@ -12,68 +12,68 @@ ui <- fluidPage(
   
   titlePanel("BA2 Info Final App"),
   tabsetPanel(type = "tabs",
-      tabPanel("Overview Page",
-               imageOutput("seoulbike"),
-               h1("Analyzing Bike Rental Data in Seoul, South Korea"),
-               h2("Background of the Data"),
-               p("In 2015, Seoul, South Korea created a new type of public transportation in the form of Bike sharing. The data used in the following interactive visualizations and analysis was provided by the", em("UCI Machine Learning Repository"), " was collected 
+              tabPanel("Overview Page",
+                       imageOutput("seoulbike"),
+                       h1("Analyzing Bike Rental Data in Seoul, South Korea"),
+                       h2("Background of the Data"),
+                       p("In 2015, Seoul, South Korea created a new type of public transportation in the form of Bike sharing. The data used in the following interactive visualizations and analysis was provided by the", em("UCI Machine Learning Repository"), " was collected 
                of off that system. It shows data on bike rentals over a two year period: from December 2017 to November 2018. The dataset includes 14 variables (columns) and 8,760 separate enteries (rows)."),
-               h2("Goals"),
-               p("We want to analyze what environmental conditions inform demand rates of rentable bikes. Specifically,
+                       h2("Goals"),
+                       p("We want to analyze what environmental conditions inform demand rates of rentable bikes. Specifically,
                  we imagined our audience would be the managers and designers of bike share companies (such as lime, Bird, MoBike and others),
                  as these individuals would have a special interest in this data. We also imagined our data and our visualizations would be helpful 
                  to organizations trying to design cleaner transportation systems to help prevent climate change. At the end of our analysis, we want to
                  be able to determine", strong("when is the best time, and what are the best environmental conditions, to increase bike stock availability the most?"))
-              
-               
-               
-               ),
+                       
+                       
+                       
+              ),
               tabPanel("Question 1",
                        sidebarPanel("This graph shows the average number of bike rentals 
                        each month for the year selected.", 
                                     radioButtons("year", "Select Year",
                                                  choices = c(num))),
                        mainPanel(textOutput("text"), textOutput("text2"), plotOutput("plot"), tableOutput("sample"))
-                       ),
-      
-      
+              ),
+              
+              
               tabPanel("Question 2",
-                        sidebarLayout(
-                           sidebarPanel(
-                              sliderInput("month",
-                                          "month of the year", 
-                                           value = 6,
-                                           min = 1,
-                                           max = 12),
-                              
-                              h3("Month Number Key"),
-                              p(strong(1), "- January"),
-                              p(strong(2), "- February"),
-                              p(strong(3), "- March"),
-                              p(strong(4), "- April"),
-                              p(strong(5), "- May"),
-                              p(strong(6), "- June"),
-                              p(strong(7), "- July"),
-                              p(strong(8), "- August"),
-                              p(strong(9), "- September"),
-                              p(strong(10), "- October"), 
-                              p(strong(11), "- November"),
-                              p(strong(12), "- December"), 
-                           ),
-                        mainPanel(
-                          h1("How Does Solar Radiation Affect Bike Rentals on a Given Day?"),
-                          plotOutput("plotsolar"),
-                          h2("Explanation"),
-                          p("While future editions of our app may include a regression line to highlight the 
+                       sidebarLayout(
+                         sidebarPanel(
+                           sliderInput("month",
+                                       "month of the year", 
+                                       value = 6,
+                                       min = 1,
+                                       max = 12),
+                           
+                           h3("Month Number Key"),
+                           p(strong(1), "- January"),
+                           p(strong(2), "- February"),
+                           p(strong(3), "- March"),
+                           p(strong(4), "- April"),
+                           p(strong(5), "- May"),
+                           p(strong(6), "- June"),
+                           p(strong(7), "- July"),
+                           p(strong(8), "- August"),
+                           p(strong(9), "- September"),
+                           p(strong(10), "- October"), 
+                           p(strong(11), "- November"),
+                           p(strong(12), "- December"), 
+                         ),
+                         mainPanel(
+                           h1("How Does Solar Radiation Affect Bike Rentals on a Given Day?"),
+                           plotOutput("plotsolar"),
+                           h2("Explanation"),
+                           p("While future editions of our app may include a regression line to highlight the 
                             relationship between solar radiation and bike rentals, the current plot shows little to no
                             strong correlation between the two variables."),
-                          h2("Data Table With Median, Minimum and Maximum Values"),
-                          tableOutput("tablesolar")
-                          
-                          ))),
-                       
-                       
-              tabPanel("Question 3",
+                           h2("Data Table With Median, Minimum and Maximum Values"),
+                           tableOutput("tablesolar")
+                           
+                         ))),
+              
+              
+              tabPanel("Question 3: How Hour of the Day Affects Bike Rentals",
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
                            "Year Round"="Year Round", "Spring"="Spring", "Summer"="Summer",
@@ -88,12 +88,12 @@ ui <- fluidPage(
                              each hour for a season from the year round average in order to see the average deviation each month had. While the prior graph contains this information based off
                              of the distance between the LOESS lines, plot 2 offers an exact value for the average distance and offers a clearer visual to determine deviation. ")
                            
-                           ),
+                         ),
                          mainPanel(plotOutput("hour_plot"),
                                    plotOutput("hour_diff"))
                        )),
               
-
+              
               tabPanel("Question 4: Precipitation Impacts on Bike Rentals",
                        sidebarLayout(
                          sidebarPanel(
@@ -111,13 +111,32 @@ ui <- fluidPage(
                                      bikes to get to places around the city like their place of work. The average number of bikes rented
                                      for this range of precipitation is:"),
                                    strong(textOutput("avPrecip"))),
-                        )),
+                       )),
               
               
-              tabPanel("Conclusion", mainPanel(
-                p("this is a written conclusion place holder")))
-                )
+              tabPanel("Conclusion",
+                       mainPanel(
+                         h1("Important Findings"),
+                         HTML("<ul><li>With respect to weather analysis, bike rentals are at their highest under dry conditions and dropping off significantly between 0-2 mm of rain.</li><li>
+                              Solar radiation does not seem to have a strong correlation to number of bikes rented.</li><li>
+                              Taking a look at question 3 we see that both 7am and 6pm see large jumps in bike rentals deviating significantly from their LOESS lines.
+                              These align with commute hours with 7am being when people prepare to go to work and 6pm being right when people get off work.
+                              The surge when work ends is particularly high. Also notable is that the peaks seem to be consistent throughout the year and are represented 
+                              in every season.</li><li>
+                              In terms of months, June has the most bike rentals with the Winter months showing a large dip</li></ul>"),
+                         h1("What to do?"),
+                         HTML("<ul><li>Obvious starting point is scaling up the number of available bikes during non rainy summer days, in particular June.
+                              This ensures that during those peak times there is enough bikes to meet demand.</li><li>
+                              Since commute hours involve show surges in rentals, not only should there be more bikes available during 7am and 6pm but this information
+                              might also give insight into where bikes should be positioned. In the mornings, areas where people commonly commute from should have a heavier presence of bikes
+                              and at 6pm the city and urban areas where large amount of people work should be targeted with more bikes.</li><li>
+                              Winter shows a significant drop in the number of rentals, weather and seasons are interrelated and the harsher conditions of Winter may
+                              require an alternate transportation method in order to capture the market. Not only should bike sharing companies consider this implication
+                              but other ride sharing or travel services may see an opportunity.</li></ul>"))
               )
+              
+  )
+)
 
 
 
@@ -125,17 +144,17 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-
+  
   # Create a bar chart of average bike rentals by month
   output$plot <- renderPlot({
-   new <- 
-    bike_data%>%
+    new <- 
+      bike_data%>%
       filter(year %in% input$year)
-   new%>%
-     group_by(month) %>%
-     summarize(avg_rentals = mean(num_bikes_rented)) %>%
+    new%>%
+      group_by(month) %>%
+      summarize(avg_rentals = mean(num_bikes_rented)) %>%
       ggplot(aes(month, avg_rentals, fill = month)) +
-     geom_bar(stat = "identity", position = "dodge")+
+      geom_bar(stat = "identity", position = "dodge")+
       ggtitle(paste("Average Bike Rentals by Month for", input$year))
   })
   
@@ -155,7 +174,7 @@ server <- function(input, output) {
       group_by(month) %>%
       summarize(total_rentals = mean(num_bikes_rented)) %>%
       filter(total_rentals == max(total_rentals))
-})
+  })
   output$hour_plot <- renderPlot({
     
     year_round_data <- bike_data %>% 
@@ -170,7 +189,7 @@ server <- function(input, output) {
       summarize(avg_bikes=mean(num_bikes_rented))
     
     if ("Year Round"%in%input$Seasons==TRUE) {
-        ggplot()+geom_point(data=year_round_data,aes(hour,avg_bikes),color="Black")+geom_smooth(data=year_round_data,aes(hour,avg_bikes),se=FALSE,color="Black")+
+      ggplot()+geom_point(data=year_round_data,aes(hour,avg_bikes),color="Black")+geom_smooth(data=year_round_data,aes(hour,avg_bikes),se=FALSE,color="Black")+
         geom_point(data=seasons_data,aes(hour,avg_bikes,col=seasons))+geom_smooth(data=seasons_data,aes(hour,avg_bikes,col=seasons),se=FALSE)+
         labs(title="Average Bike Rentals by Hour",x="Hour of Day",y="Average Number of Bikes Rented")
       
@@ -211,14 +230,14 @@ server <- function(input, output) {
     
     diff_df <- data.frame(seasons_list,diff_list)
     
-
+    
     ggplot(diff_df)+geom_col(aes(seasons_list,diff_list,fill=seasons_list))+labs(title="Difference from Year Round Average Rental Rate",x="Seasons",y="Average Difference",fill="Seasons")
-
+    
   })
   
   # Find the month with the most rentals for the input year
   output$text <- renderPrint({
-      paste("The month with the most rentals for this year on average is", year_data()[1])
+    paste("The month with the most rentals for this year on average is", year_data()[1])
   })
   
   avg_data <- reactive({
@@ -243,7 +262,7 @@ server <- function(input, output) {
       ggplot(aes(solar_radiation,num_bikes_rented))+
       geom_point()+
       labs(title = "Comparing the Number of Bikes Rented to Solar Radiation", x= "Amount of Solar Radiation in MJ/m2", y="Number of Bikes Rented")
- 
+    
   })
   
   #define as reactive for plot
@@ -299,7 +318,7 @@ server <- function(input, output) {
     filename <- normalizePath(file.path("./images/seoulbike.jpeg"))
     list(src = filename,
          alt = paste("Two Women in Seoul Using the Public Bike Share System"))
-    }, deleteFile = FALSE)
+  }, deleteFile = FALSE)
   
   
 }
