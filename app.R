@@ -78,7 +78,6 @@ ui <- fluidPage(
                         )),
               tabPanel("Conclusion", mainPanel(
                 p("this is a written conclusion place holder")))
-              
                 )
               )
 )
