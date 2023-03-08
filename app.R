@@ -37,7 +37,7 @@ ui <- fluidPage(
             of the data points to suggest that there was a strong relationship between the two. One interesting characteristic I did see in the graphs was that the range of bike rentals between months
             increased from month 1 until month 7. After month 7, the range began to decrease each month."),
                           h2("Conclusion"),
-                          ),
+                          )),
               tabPanel("Question 3",
                        sidebarLayout(
                          sidebarPanel(checkboxGroupInput("Seasons", label="Seasons", choices = list(
@@ -80,7 +80,7 @@ ui <- fluidPage(
                 p("this is a written conclusion place holder")))
                 )
               )
-)
+
 
 # comment to see if app is being shared and tracked correctly 
 
