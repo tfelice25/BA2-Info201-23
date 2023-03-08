@@ -9,7 +9,6 @@ bikes2 <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
-  setBackgroundImage(src = "images/background.jpg"),
   titlePanel("Analyzing Bike Rental Usage in Seoul"),
   tabsetPanel(type = "tabs",
               tabPanel("Overview Page",
