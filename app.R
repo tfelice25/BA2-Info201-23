@@ -9,7 +9,8 @@ bikes2 <- read_delim("bikes2.csv")
 num <- unique(bike_data$year)
 
 ui <- fluidPage(
-  titlePanel("Analyzing Bike Rental Usage in Seoul"),
+  titlePanel(
+    h1("Analyzing Bike Rental Usage in Seoul",align="center")),
   tabsetPanel(type = "tabs",
               tabPanel("Overview Page",
                        imageOutput("seoulbike"),
@@ -127,11 +128,11 @@ ui <- fluidPage(
                               These align with commute hours with 7am being when people prepare to go to work and 6pm being right when people get off work.
                               The surge when work ends is particularly high. Also notable is that the peaks seem to be consistent throughout the year and are represented 
                               in every season.</li><li>
-                              In terms of months, June has the most bike rentals with the Winter months showing a large dip</li></ul>"),
+                              In terms of months, June has the most bike rentals with the Winter months showing a large dip.</li></ul>"),
                          h1("What to do?"),
                          HTML("<ul><li>Obvious starting point is scaling up the number of available bikes during non rainy summer days, in particular June.
                               This ensures that during those peak times there is enough bikes to meet demand.</li><li>
-                              Since commute hours involve show surges in rentals, not only should there be more bikes available during 7am and 6pm but this information
+                              Since commute hours show surges in rentals, not only should there be more bikes available during 7am and 6pm but this information
                               might also give insight into where bikes should be positioned. In the mornings, areas where people commonly commute from should have a heavier presence of bikes
                               and at 6pm the city and urban areas where large amount of people work should be targeted with more bikes.</li><li>
                               Winter shows a significant drop in the number of rentals, weather and seasons are interrelated and the harsher conditions of Winter may
