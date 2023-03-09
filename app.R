@@ -100,9 +100,9 @@ ui <- fluidPage(
                          sidebarPanel(
                            sliderInput("precipSlider", label = h3("Select Precipitation (mm) Range"), min = 0, 
                                        max = 35, value = c(0, 15)),
-                           selectInput("select", label = h3("Select Point Color"), 
-                                       choices = list("Black" = 1, "Blue" = 2, "Green" = 3, "Purple" = 4), 
-                                       selected = "Red"),
+                           selectInput("selectColor", label = h3("Select Point Color"), 
+                                       choices = list("Black" = "black", "Blue" = "blue", "Green" = "green", "Red" = "red"), 
+                                       selected = "Black"),
                          ),   
                          mainPanel(plotOutput("precip_plot"),
                                    h2("Analysis of Trend & Correlation"),
@@ -287,16 +287,6 @@ server <- function(input, output) {
   #access dot color changer for plot
   output$value <- renderPrint({ input$selectColor })
   
-  #define colors
-  colors <- reactive({ switch(
-    input$selectColor,
-    "1" = "black",
-    "2" = "blue",
-    "3" = "green",
-    "4" = "purple"
-  )
-  })
-  
   #make plot
   output$precip_plot <- renderPlot({
     bike_data %>% 
@@ -305,9 +295,8 @@ server <- function(input, output) {
       group_by(rainfall) %>% 
       summarize(avg_bikes=mean(num_bikes_rented)) %>% 
       ggplot(aes(rainfall, avg_bikes))+
-      scale_fill_manual(values = colors)+
-      geom_point()+
-      geom_smooth()+
+      geom_point(col = input$selectColor)+
+      geom_smooth(col = input$selectColor)+
       labs(x = "Precipitation (mm) per day", y = "Number of Bikes Rented per day",
            title = "Analyzing Impact of Precipitation on Bike Rental Rates in Seoul")
   })
