@@ -1,6 +1,6 @@
 # INFO201 BA Group 2 Final Project: Analyzing Bikeshare Rental Data in Seoul, South Korea
 
-ShinyApps link: 
+ShinyApps link: https://miranair.shinyapps.io/BA2-Info201-23/
 
 ## Background of the Data
 In 2015, Seoul, South Korea created a new type of public transportation in the form of Bike sharing. The data used in the following interactive visualizations and analysis was provided by the UCI Machine Learning Repository. It shows data on bike rentals over a two year period: from December 2017 to November 2018. The dataset includes 14 variables (columns) and 8,760 separate enteries (rows)."
